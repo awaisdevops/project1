@@ -1,38 +1,38 @@
-def gv
-
 pipeline {
     agent any
+    tools {
+        maven 'mvn3.9.11'
+    }
     stages {
-        stage("init") {
+        
+        stage('build app') {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "building the application..."
+                    sh 'mvn package'
                 }
             }
         }
-        stage("build jar") {
+        stage('build image') {
             steps {
                 script {
-                    echo "building jar"
-                    //gv.buildJar()
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+
+                        sh "docker build -t awaisakram11199/devopsimages:dcllcimg1 ."
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker push awaisakram11199/devopsimages:dcllcimg1"
+                    }
                 }
             }
         }
-        stage("build image") {
+        stage('deploy') {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    echo 'deploying docker image to EC2...'
                 }
             }
         }
-        stage("deploy") {
-            steps {
-                script {
-                    echo "deploying"
-                    //gv.deployApp()
-                }
-            }
-        }
-    }   
+        
+    }
 }
