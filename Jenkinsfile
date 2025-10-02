@@ -18,7 +18,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running unit and integration tests with Maven...'
-                echo "Executing pipeline for branch $BRANCH_NAME"
+                //echo "Executing pipeline for branch $BRANCH_NAME"
                 sh 'mvn test'
             }
         }
