@@ -27,7 +27,7 @@ pipeline {
 
             when {
                 expression { 
-                    BRANCH_NAME == 'master' 
+                    BRANCH_NAME == 'main' 
                 } 
             }
 
@@ -44,6 +44,13 @@ pipeline {
             }
         }
         stage('deploy') {
+
+            when {
+                expression { 
+                    BRANCH_NAME == 'main' 
+                } 
+            }
+            
             steps {
                 script {
                     echo 'deploying docker image to EC2...'
