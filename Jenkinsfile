@@ -25,11 +25,11 @@ pipeline {
         
         stage('build image') {
 
-            when {
-                expression { 
-                    BRANCH_NAME == 'main' 
-                } 
-            }
+            //when {
+                //expression { 
+                    //BRANCH_NAME == 'main' 
+                //} 
+            //}
 
             steps {
                 script {
@@ -45,11 +45,11 @@ pipeline {
         }
         stage('deploy') {
 
-            when {
-                expression { 
-                    BRANCH_NAME == 'main' 
-                } 
-            }
+            //when {
+                //expression { 
+                    //BRANCH_NAME == 'main' 
+                //} 
+            //}
             
             steps {
                 script {
