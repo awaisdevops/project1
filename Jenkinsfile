@@ -80,8 +80,7 @@ pipeline {
 
                     // Securely retrieves credentials using the 'github-credentials' ID.
                     withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        h
-                
+                                        
                         // --- FIX FOR URL ENCODING ISSUE ---
                         // The 'fatal: No such URL found' error occurs because Git URLs cannot contain unencoded spaces 
                         // in the username. We must URL-encode both the user and password/token.
