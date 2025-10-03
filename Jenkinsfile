@@ -73,6 +73,29 @@ pipeline {
                 }
             }
         }
+
+        stage('commit new app version') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        
+                        # Git configuration (only needed once)
+                        sh 'git config --global user.email "jenkins@example.com"'
+                        sh 'git config --global user.name "jenkins"'
+
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config --list'
+                        
+                        # Push version bump to remote Git repository
+                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/awaisdevops/project1.git"
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version bump"'
+                        sh 'git push origin HEAD:jenkins-jobs'
+                    }
+                }
+            }
+        }
         
     }
 }
