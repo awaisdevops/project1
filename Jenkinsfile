@@ -100,7 +100,7 @@ pipeline {
                     
                     // 3. Commit and Push
                     sh 'git add .'
-                    sh 'git commit -m "Automated version bump [skip ci]"'
+                    sh 'git commit -m "Automated version bump  [skip ci]"'
                     sh 'git push origin HEAD:main'
                     }
                 }
