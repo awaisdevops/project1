@@ -101,7 +101,7 @@ pipeline {
                     // 3. Commit and Push
                     sh 'git add .'
                     sh 'git commit -m "ci: version bump"'
-                    sh 'git push origin HEAD:jenkins-jobs'
+                    sh 'git push origin HEAD:main'
                     }
                 }
             }
