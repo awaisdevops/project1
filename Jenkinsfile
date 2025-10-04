@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment{
-        SONAR_HOME= tool "SonarQube"
+        SONAR_HOME= tool "SQ"
     }
 
     stages {
@@ -71,7 +71,7 @@ pipeline {
 
         stage("Security & Quality: SonarQube Static Analysis"){
             steps{
-                withSonarQubeEnv("SonarQube"){
+                withSonarQubeEnv("SQ"){
                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=dc-llc-app -Dsonar.projectKey=dc-llc-app"
                 }
             }
