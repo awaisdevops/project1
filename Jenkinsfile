@@ -120,14 +120,18 @@ pipeline {
             }
         }
 
-        stage('Security: Trivy Container Image Scan'){
+        stage('Security: Trivy Container Image Scan'){            
             steps{
-                def FULL_IMAGE_TAG = "awaisakram11199/devopsimages:${env.IMAGE_NAME}"
-                sh "trivy image --format json -o trivy-image-report.json ${FULL_IMAGE_TAG}"
+                script {                    
+                    // 1. Define local variable for the image tag
+                    def FULL_IMAGE_TAG = "awaisakram11199/devopsimages:${env.IMAGE_NAME}"
 
-                // Archive the report
-
-                archiveArtifacts artifacts: 'trivy-image-report.json', onlyIfSuccessful: true
+                    // 2. Execute the shell command using the variable
+                    sh "trivy image --format html -o trivy-image-report.html ${FULL_IMAGE_TAG}"
+                    
+                    // 3. Archive the report artifact (This step can be outside 'script' but is often placed here for flow)
+                    archiveArtifacts artifacts: 'trivy-image-report.html', onlyIfSuccessful: true
+                }
             }
         }
 
