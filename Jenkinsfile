@@ -30,7 +30,7 @@ pipeline {
             //}
         //}
 
-        stage('unit tests') {
+        stage('Unit Tests') {
             steps {
                 echo 'Running Unit Tests...'
                 // 'withMaven' step ensures the correct Maven environment is used
@@ -43,6 +43,22 @@ pipeline {
                 always {
                     // Collect and publish JUnit test reports
                     junit '**/target/surefire-reports/TEST-*.xml' 
+                }
+            }
+        }
+
+        stage('Integration Tests') {
+            steps {
+                echo 'Running Integration Tests...'
+                // Running 'verify' executes both the tests and the result check
+                withMaven(maven: 'maven') { 
+                    sh 'mvn verify' // This runs pre-integration-test, integration-test, and verify
+                }
+            }
+            post {
+                always {
+                    // Collect and publish Failsafe test reports
+                    junit '**/target/failsafe-reports/TEST-*.xml'
                 }
             }
         }
