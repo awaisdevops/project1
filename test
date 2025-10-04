@@ -49,7 +49,7 @@ pipeline{
         stage('deploy'){
             steps{
                 script{
-                    echo "Writting  something"
+                    echo "Writting   something"
                 }
             }
         }
