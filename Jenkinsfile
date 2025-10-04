@@ -71,8 +71,9 @@ pipeline {
 
         stage("Security & Quality: SonarQube Static Analysis"){
             steps{
-                withSonarQubeEnv("SQ"){
-                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=dc-llc-app -Dsonar.projectKey=dc-llc-app"
+                withSonarQubeEnv("SQ"){                    
+                    // The Maven plugin handles paths to binaries automatically.
+                    sh "mvn clean verify sonar:sonar"
                 }
             }
         }
