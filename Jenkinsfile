@@ -30,11 +30,20 @@ pipeline {
             }
         }
 
-        stage('test app') {
+        stage('Unit Tests') {
             steps {
-                echo 'running unit and integration tests with Maven...'
-                //echo "Executing pipeline for branch $BRANCH_NAME"
-                sh 'mvn test'
+                echo 'Running Unit Tests...'
+                // 'withMaven' step ensures the correct Maven environment is used
+                withMaven(maven: 'maven') { 
+                    sh 'mvn test'
+                }
+            }
+            post {
+                // 'always' ensures the reports are collected even if tests fail
+                always {
+                    // Collect and publish JUnit test reports
+                    junit '**/target/surefire-reports/TEST-*.xml' 
+                }
             }
         }
         
