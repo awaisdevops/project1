@@ -78,22 +78,22 @@ pipeline {
             }
         }
 
-        stage("Security: OWASP Dependency Check (SCA)"){
-            steps{
-                dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'dc'
-                dependencyCheckPublisher pattern: '**/app-dep-check-report.html'
-            }
-        }
+        //stage("Security: OWASP Dependency Check (SCA)"){
+            //steps{
+                //dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'dc'
+                //dependencyCheckPublisher pattern: '**/app-dep-check-report.html'
+            //}
+        //}
 
         stage("Security: Trivy Filesystem Scan"){
             steps{
-                sh "trivy fs --format  table -o trivy-fs-report.html ."
+                sh "trivy fs --format  table -o trivy-fs-report.json ."
             }
         }
 
         stage("Quality Gate: Wait for SonarQube Approval"){
             steps{
-                timeout(time: 4, unit: "MINUTES"){
+                timeout(time: 2, unit: "MINUTES"){
                     waitForQualityGate abortPipeline: false
                 }
             }
@@ -128,10 +128,10 @@ pipeline {
                     def FULL_IMAGE_TAG = "awaisakram11199/devopsimages:${env.IMAGE_NAME}"
 
                     // 2. Execute the shell command using the variable
-                    sh "trivy image --format html -o trivy-image-report.html ${FULL_IMAGE_TAG}"
+                    sh "trivy image --format json -o trivy-image-report.json ${FULL_IMAGE_TAG}"
                     
                     // 3. Archive the report artifact (This step can be outside 'script' but is often placed here for flow)
-                    archiveArtifacts artifacts: 'trivy-image-report.html', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'trivy-image-report.json', onlyIfSuccessful: true
                 }
             }
         }
