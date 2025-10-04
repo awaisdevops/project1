@@ -1,0 +1,67 @@
+pipeline{
+    agent any
+    tools{
+        maven 'maven'
+    }
+
+    stages{
+
+        stage('increment version'){
+            steps{
+                script{
+                    echo "Writting something"
+                }
+            }
+        }
+
+        stage('build app'){
+            steps{
+                script{
+                    echo "Writting something"
+                }
+            }
+        }
+
+        stage('Unit Tests'){
+            steps{
+                script{
+                    echo "Writting something"
+                }
+            }
+        }
+
+        stage('Integration Tests'){
+            steps{
+                script{
+                    echo "Writting something"
+                }
+            }
+        }
+
+        stage('build image'){
+            steps{
+                script{
+                    echo "Writting something"
+                }
+            }
+        }
+
+        stage('deploy'){
+            steps{
+                script{
+                    echo "Writting something"
+                }
+            }
+        }
+
+        stage('commit new app version'){
+            steps{
+                script{
+                    echo "Writting something"
+                }
+            }
+        }
+
+        
+    }
+}
