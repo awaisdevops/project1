@@ -54,7 +54,7 @@ pipeline{
             }
         }
 
-        stage('commit new app version'){
+        stage('commit new app  version'){
             steps{
                 script{
                     echo "Writting something"
